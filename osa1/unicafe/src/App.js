@@ -15,14 +15,14 @@ const Avarage = ({ good, neutral, bad }) => {
 }
 
 const Positive = ({ good, neutral, bad }) => {
-  if (good+neutral+bad === 0){
-    return(
+  if (good + neutral + bad === 0) {
+    return (
       <div>
         Give feedback to see statistics
       </div>
     )
   }
-  const positive = good / (good + neutral + bad) * 100 +"%"
+  const positive = good / (good + neutral + bad) * 100 + "%"
   return (
     <div>
       positive {positive}
@@ -32,6 +32,7 @@ const Positive = ({ good, neutral, bad }) => {
 
 const Statistics = ({ good, neutral, bad }) => (
   <div>
+    <h2>statistics</h2>
     <p>good {good}</p>
     <p>neutral {neutral} </p>
     <p>bad {bad} </p>
@@ -55,10 +56,7 @@ const App = () => {
           <Button handleClick={() => setBad(bad + 1)} text='bad' />
         </div>
       </div>
-      <div>
-        <h2>statistics</h2>
         <Statistics good={good} neutral={neutral} bad={bad} />
-      </div>
     </div>
   )
 }
