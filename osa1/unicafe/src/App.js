@@ -5,11 +5,11 @@ const Button = ({ handleClick, text }) => (
     {text}
   </button>
 )
-const Avarage = ({ good, neutral, bad }) => {
+const Average = ({ good, neutral, bad }) => {
   const avg = (good - bad) / (good + neutral + bad)
   return (
     <div>
-      avarage {avg}
+      average {avg}
     </div>
   )
 }
@@ -47,7 +47,7 @@ const Statistics = ({ good, neutral, bad }) => {
       <StatisticLine text="neutral" value={neutral} />
       <StatisticLine text="bad" value={bad} />
       <All good={good} neutral={neutral} bad={bad} />
-      <Avarage good={good} neutral={neutral} bad={bad} />
+      <Average good={good} neutral={neutral} bad={bad} />
       <Positive good={good} neutral={neutral} bad={bad} />
     </div>
   )
