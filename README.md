@@ -1,0 +1,1 @@
+En pushannu node_module:ta tänne Githubiin, koska ne olivat niin isoja tiedostoja, että niiden pushaaminen tuotti ongelmia. Toivottavasti tämä ei haittaa, koska täällä Githubissa pitöisi kuitenkin olla kaikki tiedostot, joihin olen itse kirjoittanut koodia.
