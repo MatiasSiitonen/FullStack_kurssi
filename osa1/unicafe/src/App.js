@@ -8,9 +8,9 @@ const Button = ({ handleClick, text }) => (
 
 const Statistics = ({ good, neutral, bad }) => (
   <div>
-    <p>good {good} {"\n"}</p>
-    <p>neutral {neutral} {"\n"}</p>
-    <p>bad {bad} {"\n"}</p>
+    <p>good {good}</p>
+    <p>neutral {neutral} </p>
+    <p>bad {bad} </p>
   </div>
 )
 const App = () => {
