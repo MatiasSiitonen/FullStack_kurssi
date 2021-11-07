@@ -1,12 +1,21 @@
 import axios from "axios"
 import React, { useState, useEffect } from "react"
 
+const Button = ({ name, setFilter }) => {
+  const clickHandler = () => {
+    setFilter(name)
+  }
+  return (
+    <button onClick={clickHandler}>
+      show
+    </button>)
 
-const Country = ({ filter, data }) => {
+}
+
+const Country = ({ filter, data, setFilter }) => {
 
   const filtered = data.filter(Country => Country.name.common.toUpperCase().includes(filter.toUpperCase()))
-  console.log(filtered.length)
-  console.log(filtered)
+
   if (filtered.length === 1) {
     const languages = Object.values(filtered[0].languages)
     return (
@@ -47,9 +56,10 @@ const Country = ({ filter, data }) => {
       <div>
         {filtered.map(county =>
           <div key={county.name.common}>
-            {county.name.common}
+            {county.name.common} {""} <Button key={county.name.common} name={county.name.common} setFilter={setFilter} />
           </div>
         )}
+
       </div>
     )
   }
@@ -94,7 +104,7 @@ const App = () => {
         <Filter setFilter={setFilter} filter={filter} />
       </div>
       <div>
-        <Country filter={filter} data={data} />
+        <Country filter={filter} data={data} setFilter={setFilter} />
       </div>
     </div>
 
