@@ -36,15 +36,23 @@ const PersonForm = ({ persons, newName, setNewName, newNumber, setNewNumber, set
     }
 
     const names = persons.map(person => person.name)
-    const copy = names.includes(newName) ?
-      persons : persons.concat(personObject,)
 
-    if (names.includes(newName)) {
+    if (names.includes(newName) === false) {
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName("")
+          setNewNumber("")
+        })
+    } else {
       alert(`${newName} is already added to phonebook`)
+      setNewName("")
+      setNewNumber("")
     }
-    setPersons(copy)
-    setNewName("")
-    setNewNumber("")
+
+
+
   }
   const handleNameChange = (event) => {
     setNewName(event.target.value)
@@ -108,18 +116,16 @@ const App = () => {
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
-        console.log('promise fulfilled')
         setPersons(response.data)
       })
   }, [])
-  console.log('render', persons.length, 'persons')
 
 
   return (
     <div>
       <h2>Phonebook</h2>
 
-      <Filter persons={persons}  setFilter={setFilter} filter={filter} />
+      <Filter persons={persons} setFilter={setFilter} filter={filter} />
       <h2>add a new</h2>
 
       <PersonForm persons={persons} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} setPersons={setPersons} />
