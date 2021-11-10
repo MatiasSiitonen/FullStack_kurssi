@@ -5,13 +5,12 @@ import noteService from './services/notes'
 const Person = ({ person, setPersons, persons }) => {
 
   const clickhandler = () => {
-    if(window.confirm(`Delete ${person.name}?`))
-    {  
-       noteService
-      .remove(person.id)
-        setPersons(persons.filter(human => human.id !== person.id))
-      }
- 
+    if (window.confirm(`Delete ${person.name}?`)) {
+      noteService
+        .remove(person.id)
+      setPersons(persons.filter(human => human.id !== person.id))
+    }
+
   }
   return (
     <div>
@@ -54,14 +53,24 @@ const PersonForm = ({ persons, newName, setNewName, newNumber, setNewNumber, set
         .create(personObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
-          setNewName("")
-          setNewNumber("")
+
         })
-    } else {
-      alert(`${newName} is already added to phonebook`)
-      setNewName("")
-      setNewNumber("")
     }
+    else if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        
+        const id = names.indexOf(newName) + 1
+        const person = persons.find(p => id === p.id)
+        const changedPerson = { ...person, number: newNumber }
+        noteService
+          .update(id, changedPerson)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+          })
+      }
+
+    
+    setNewName("")
+    setNewNumber("")
 
 
 
