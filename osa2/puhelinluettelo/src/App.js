@@ -2,15 +2,28 @@ import React, { useState, useEffect } from 'react'
 import noteService from './services/notes'
 
 
-const Person = ({ person }) => {
+const Person = ({ person, setPersons, persons }) => {
+
+  const clickhandler = () => {
+    if(window.confirm(`Delete ${person.name}?`))
+    {  
+       noteService
+      .remove(person.id)
+        setPersons(persons.filter(human => human.id !== person.id))
+      }
+ 
+  }
   return (
     <div>
       {person.name} {person.number}
+      <button onClick={clickhandler}>Delete
+      </button>
     </div>
   )
 }
 
-const Persons = ({ filter, persons }) => {
+
+const Persons = ({ filter, persons, setPersons }) => {
 
   const filtered = persons.filter(person => person.name.toUpperCase().includes(filter.toUpperCase()))
   const showPersons = filter === "" ? persons : filtered;
@@ -18,12 +31,11 @@ const Persons = ({ filter, persons }) => {
   return (
     <div>
       {showPersons.map(person =>
-        <Person key={person.name} person={person} />
+        <Person key={person.name} person={person} setPersons={setPersons} persons={persons} />
       )}
     </div>
   )
 }
-
 
 
 const PersonForm = ({ persons, newName, setNewName, newNumber, setNewNumber, setPersons }) => {
@@ -40,8 +52,8 @@ const PersonForm = ({ persons, newName, setNewName, newNumber, setNewNumber, set
     if (names.includes(newName) === false) {
       noteService
         .create(personObject)
-        .then(returnedNote => {
-          setPersons(persons.concat(returnedNote))
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
           setNewName("")
           setNewNumber("")
         })
@@ -105,7 +117,6 @@ const Filter = ({ filter, setFilter }) => {
 
 
 
-
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
@@ -121,6 +132,8 @@ const App = () => {
   }, [])
 
 
+
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -131,8 +144,7 @@ const App = () => {
       <PersonForm persons={persons} newName={newName} setNewName={setNewName} newNumber={newNumber} setNewNumber={setNewNumber} setPersons={setPersons} />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
-
+      <Persons persons={persons} filter={filter} setPersons={setPersons} />
 
     </div>
   )
