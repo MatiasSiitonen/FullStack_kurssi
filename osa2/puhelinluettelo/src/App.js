@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import noteService from './services/notes'
 
 
 const Person = ({ person }) => {
@@ -38,10 +38,10 @@ const PersonForm = ({ persons, newName, setNewName, newNumber, setNewNumber, set
     const names = persons.map(person => person.name)
 
     if (names.includes(newName) === false) {
-      axios
-        .post('http://localhost:3001/persons', personObject)
-        .then(response => {
-          setPersons(persons.concat(response.data))
+      noteService
+        .create(personObject)
+        .then(returnedNote => {
+          setPersons(persons.concat(returnedNote))
           setNewName("")
           setNewNumber("")
         })
@@ -113,10 +113,10 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    noteService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
