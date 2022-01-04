@@ -60,12 +60,16 @@ const PersonForm = ({ persons, newName, setNewName, newNumber, setNewNumber, set
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
         })
+        .catch(error => {
+          setErrorMessage(error.response.data.error)
+        })
       setErrorMessage(
         `Added ${newName}`
       )
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
+
     }
     else if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
 
