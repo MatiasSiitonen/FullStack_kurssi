@@ -61,3 +61,52 @@ describe('total likes', () => {
         expect(result).toBe(17)
     })
 })
+
+describe('favorite blog', () => {
+
+    const listWithOneBlog = [
+        {
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 5,
+            __v: 0
+        }
+    ]
+
+    test('when list has only one favorite blog is only blog', () => {
+        const result = listHelper.favoriteBlog(listWithOneBlog)
+        expect(result).toEqual(listWithOneBlog[0])
+    })
+    const listWithThreeBlogs = [
+        {
+            _id: '5a422aa71b54a676234d17f8',
+            title: 'Go To Statement Considered Harmful',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 5,
+            __v: 0
+        },
+        {
+            _id: '5a422aa71b54a676234r17c8',
+            title: 'Blog 2',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 5,
+            __v: 2
+        },
+        {
+            _id: '5a422aa71b54a676134w17f8',
+            title: 'BLog 3',
+            author: 'Edsger W. Dijkstra',
+            url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+            likes: 7,
+            __v: 0
+        }
+    ]
+    test('of a bigger list favorite blog is blog that has most likes', () => {
+        const result = listHelper.favoriteBlog(listWithThreeBlogs)
+        expect(result).toEqual(listWithThreeBlogs[2])
+    })
+})
